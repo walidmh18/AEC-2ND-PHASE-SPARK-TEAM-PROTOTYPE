@@ -13,7 +13,7 @@ import {
 
 // --- API UTILS ---
 export const fetchFMEA = async (data: any) => {
-  const res = await fetch("http://127.0.0.1:8080/spark/fmea", {
+  const res = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/fmea", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -23,7 +23,7 @@ export const fetchFMEA = async (data: any) => {
 };
 
 export const fetchSequential = async (x_array: number[], y_array: number[]) => {
-  const res = await fetch("http://127.0.0.1:8080/spark/sequential", {
+  const res = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/sequential", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -37,7 +37,7 @@ export const fetchSequential = async (x_array: number[], y_array: number[]) => {
 };
 
 export const fetchBayesian = async (x_array: number[], y_array: number[]) => {
-  const res = await fetch("http://127.0.0.1:8080/spark/bayesian", {
+  const res = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/bayesian", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -55,7 +55,7 @@ export const fetchBayesian = async (x_array: number[], y_array: number[]) => {
 };
 
 export const fetchLIMSExport = async (payload: any) => {
-  const res = await fetch("http://127.0.0.1:8080/spark/export/lims", {
+  const res = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/export/lims", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

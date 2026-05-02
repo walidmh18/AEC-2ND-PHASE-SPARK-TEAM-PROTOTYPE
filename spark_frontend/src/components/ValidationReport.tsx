@@ -141,7 +141,7 @@ export default function ValidationReport({ data }: ValidationReportProps) {
       };
 
       // Step 1: POST payload to generate the report server-side
-      const response = await fetch("http://127.0.0.1:8080/spark/export/pdf", {
+      const response = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/export/pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -153,7 +153,7 @@ export default function ValidationReport({ data }: ValidationReportProps) {
 
       // Step 2: Navigate the browser directly to the GET download URL
       // This is a native browser download — filename is always respected
-      window.open(`http://127.0.0.1:8080/spark/export/pdf/download/${download_id}`, "_blank");
+      window.open(`https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/export/pdf/download/${download_id}`, "_blank");
       
       setToastMessage("✓ Dossier Technique généré avec succès");
       setTimeout(() => setToastMessage(""), 3000);
@@ -272,7 +272,7 @@ export default function ValidationReport({ data }: ValidationReportProps) {
   useEffect(() => {
     const fetchBayesian = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8080/spark/bayesian", {
+        const response = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/bayesian", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

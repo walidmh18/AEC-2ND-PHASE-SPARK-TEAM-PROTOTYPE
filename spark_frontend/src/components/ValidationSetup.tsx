@@ -56,7 +56,7 @@ export default function ValidationSetup({
       formData.append("file", file);
 
       // Do NOT set Content-Type header — browser handles multipart boundary automatically
-      const response = await fetch("http://127.0.0.1:8080/spark/extract", {
+      const response = await fetch("https://aec-2nd-phase-spark-team-prototype.onrender.com/spark/extract", {
         method: "POST",
         body: formData,
       });
