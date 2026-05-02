@@ -1,0 +1,20 @@
+{
+  "recovery_deviation": 0.1872,
+  "api_stability": 0.0993,
+  "complexity_score": 0.0979,
+  "resolution_deficit": 0.0855,
+  "hist_rsd_precision": 0.0852,
+  "system_suitability_resolution": 0.0777,
+  "chromatographic_risk": 0.0734,
+  "rsd_over_target": 0.0478,
+  "dosage_form_encoded": 0.0463,
+  "r2_deficit": 0.0398,
+  "system_suitability_tailing": 0.0334,
+  "hist_r2_linearity": 0.0302,
+  "tailing_excess": 0.0255,
+  "target_concentration": 0.0244,
+  "hist_recovery_accuracy": 0.0209,
+  "run_time_minutes": 0.0189,
+  "extraction_steps": 0.0061,
+  "elution_type_encoded": 0.0007
+}

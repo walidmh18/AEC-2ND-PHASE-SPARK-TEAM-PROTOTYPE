@@ -1,0 +1,448 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.arch-title{font-size:15px;font-weight:500;color:var(--color-text-secondary);text-align:center;margin-bottom:1.25rem;letter-spacing:.02em}
+
+/* COLUMNS */
+.cols{display:grid;grid-template-columns:1fr 36px 1fr 36px 1fr 36px 1fr;gap:0;align-items:start}
+.col{display:flex;flex-direction:column;gap:8px}
+.arrow-col{display:flex;align-items:center;justify-content:center;padding-top:60px}
+.arrow-svg{width:32px;height:32px;flex-shrink:0}
+
+/* COLUMN HEADERS */
+.col-head{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-tertiary);text-align:center;margin-bottom:4px;padding:0 2px}
+
+/* CARDS */
+.card{border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:10px 10px 8px;cursor:pointer;transition:border-color .15s,background .15s;position:relative}
+.card:hover{border-color:var(--color-border-secondary);background:var(--color-background-secondary)}
+.card.active{border-width:1.5px}
+.card-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.card-icon svg{width:12px;height:12px}
+.card-label{font-size:12px;font-weight:500;color:var(--color-text-primary);line-height:1.3;margin-bottom:3px}
+.card-sub{font-size:10px;color:var(--color-text-secondary);line-height:1.4}
+.card-badge{display:inline-block;font-size:9px;font-weight:500;padding:1px 6px;border-radius:20px;margin-top:4px}
+
+/* ENGINE BOX */
+.engine-wrap{display:flex;flex-direction:column;gap:0;border:1px solid var(--color-border-secondary);border-radius:12px;overflow:hidden}
+.engine-head{padding:8px 10px;text-align:center;background:var(--color-background-secondary)}
+.engine-head-label{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.engine-head-sub{font-size:9px;color:var(--color-text-secondary)}
+.engine-block{padding:8px 10px;border-top:0.5px solid var(--color-border-tertiary);cursor:pointer;transition:background .15s}
+.engine-block:hover{background:var(--color-background-secondary)}
+.engine-block.active{background:var(--color-background-secondary)}
+.engine-block-label{font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.engine-block-formula{font-size:9px;font-family:var(--font-mono);color:var(--color-text-secondary);line-height:1.5}
+
+/* DETAIL PANEL */
+.detail{margin-top:1.25rem;border:0.5px solid var(--color-border-tertiary);border-radius:10px;overflow:hidden;display:none}
+.detail.show{display:block}
+.detail-head{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:10px}
+.detail-head-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.detail-head-label{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.detail-head-sub{font-size:11px;color:var(--color-text-secondary)}
+.detail-body{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail-body.single{grid-template-columns:1fr}
+.rule-card{background:var(--color-background-secondary);border-radius:8px;padding:8px 10px}
+.rule-title{font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.rule-row{font-size:10px;color:var(--color-text-secondary);line-height:1.6;display:flex;gap:6px}
+.rule-row::before{content:"›";color:var(--color-text-tertiary);flex-shrink:0}
+.rule-code{font-family:var(--font-mono);font-size:9.5px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:6px;padding:6px 8px;line-height:1.7;color:var(--color-text-secondary);white-space:pre;overflow-x:auto}
+.highlight-rule{background:var(--color-background-info);border-left:2px solid var(--color-border-info);border-radius:0 6px 6px 0;padding:5px 8px;font-size:10px;color:var(--color-text-info);line-height:1.5;margin-top:4px}
+
+/* SCORE BADGE COLORS */
+.sch{background:#E1F5EE;color:#0F6E56}
+.sr{background:#FAECE7;color:#993C1D}
+.scp{background:#EEEDFE;color:#534AB7}
+.out1{background:#E1F5EE;color:#0F6E56}
+.out2{background:#EEEDFE;color:#534AB7}
+.out3{background:#FAEEDA;color:#854F0B}
+.out4{background:#FAECE7;color:#993C1D}
+</style>
+
+<div class="wrap">
+<div class="arch-title">Architecture du prototype ADVO — moteur de décision ICH Q14/Q2(R2)</div>
+
+<div class="cols">
+
+  <!-- COL 1: INPUTS -->
+  <div class="col">
+    <div class="col-head">Inputs utilisateur</div>
+
+    <div class="card" onclick="show('goal')">
+      <div class="card-icon" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="#534AB7" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="#534AB7"/></svg></div>
+      <div class="card-label">Goal</div>
+      <div class="card-sub">Matrice produit · Concentration cible · Tolérance ATP</div>
+      <span class="card-badge scp">→ SCP</span>
+    </div>
+
+    <div class="card" onclick="show('history')">
+      <div class="card-icon" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none"><path d="M2 12L5 8L8 10L11 5L14 7" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="card-label">History (Q14)</div>
+      <div class="card-sub">Linéarité historique · Précision · System Suitability</div>
+      <span class="card-badge sch">→ SCH</span>
+    </div>
+
+    <div class="card" onclick="show('risk')">
+      <div class="card-icon" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L14 13H2L8 2Z" stroke="#993C1D" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 7V9M8 11V11.5" stroke="#993C1D" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="card-label">Risk</div>
+      <div class="card-sub">Préparation échantillon · Instrument · Réactifs</div>
+      <span class="card-badge sr">→ SR</span>
+    </div>
+  </div>
+
+  <!-- ARROW 1 -->
+  <div class="arrow-col">
+    <svg class="arrow-svg" viewBox="0 0 32 32" fill="none"><path d="M6 16H24M18 10L24 16L18 22" stroke="var(--color-border-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- COL 2: SCORING ENGINE -->
+  <div class="col">
+    <div class="col-head">Scoring engine</div>
+    <div class="engine-wrap">
+      <div class="engine-head">
+        <div class="engine-head-label">Score composite</div>
+        <div class="engine-head-sub">Confiance nette = SCH − SR×0.5 − SCP×0.3</div>
+      </div>
+      <div class="engine-block" onclick="show('sch_detail')">
+        <div class="engine-block-label">SCH — Confiance historique</div>
+        <div class="engine-block-formula">SCH = Lin×0.40 + Préc×0.35 + SST×0.25</div>
+        <span class="card-badge sch" style="margin-top:4px;display:inline-block">0 → 100</span>
+      </div>
+      <div class="engine-block" onclick="show('sr_detail')">
+        <div class="engine-block-label">SR — Score de risque</div>
+        <div class="engine-block-formula">SR = Prép×0.35 + Instr×0.35 + Réac×0.30</div>
+        <span class="card-badge sr" style="margin-top:4px;display:inline-block">0 → 100</span>
+      </div>
+      <div class="engine-block" onclick="show('scp_detail')">
+        <div class="engine-block-label">SCP — Complexité produit</div>
+        <div class="engine-block-formula">f(forme galénique) — table de lookup</div>
+        <span class="card-badge scp" style="margin-top:4px;display:inline-block">20 → 95</span>
+      </div>
+      <div class="engine-block" onclick="show('profile_detail')" style="background:var(--color-background-secondary)">
+        <div class="engine-block-label">→ Profil de validation</div>
+        <div class="engine-block-formula">≥65 : Allégé | 35–64 : Standard+ | &lt;35 : Complet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARROW 2 -->
+  <div class="arrow-col">
+    <svg class="arrow-svg" viewBox="0 0 32 32" fill="none"><path d="M6 16H24M18 10L24 16L18 22" stroke="var(--color-border-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- COL 3: DECISION RULES -->
+  <div class="col">
+    <div class="col-head">Règles de décision</div>
+
+    <div class="card" onclick="show('rule_lin')">
+      <div class="card-label">Linéarité</div>
+      <div class="card-sub">SCH ≥ 75 + SR ≤ 40 → 3 pts × 2 rep</div>
+      <div class="card-sub">TOST confirmé → matrice unique</div>
+      <span class="card-badge sch">−50% injections</span>
+    </div>
+
+    <div class="card" onclick="show('rule_prec')">
+      <div class="card-label">Précision</div>
+      <div class="card-sub">SCH ≥ 75 + Instr ≤ 40 → 2j × 2 analystes</div>
+      <span class="card-badge sch">−12 injections</span>
+    </div>
+
+    <div class="card" onclick="show('rule_acc')">
+      <div class="card-label">Exactitude</div>
+      <div class="card-sub">SCP ≤ 30 + SCH ≥ 75 → inférée de linéarité</div>
+      <span class="card-badge sch">−9 injections</span>
+    </div>
+
+    <div class="card" onclick="show('rule_rob')">
+      <div class="card-label">Robustesse / MODR</div>
+      <div class="card-sub">SCH ≥ 70 → Plackett-Burman 8 exp.</div>
+      <div class="card-sub">SR &gt; 60 → PB-12 + facteurs risque</div>
+      <span class="card-badge scp">MODR généré</span>
+    </div>
+  </div>
+
+  <!-- ARROW 3 -->
+  <div class="arrow-col">
+    <svg class="arrow-svg" viewBox="0 0 32 32" fill="none"><path d="M6 16H24M18 10L24 16L18 22" stroke="var(--color-border-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- COL 4: OUTPUTS -->
+  <div class="col">
+    <div class="col-head">Outputs générés</div>
+
+    <div class="card" onclick="show('out_reg')">
+      <div class="card-icon" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2H10L13 5V14H3V2Z" stroke="#0F6E56" stroke-width="1.5"/><path d="M10 2V5H13" stroke="#0F6E56" stroke-width="1.5"/><path d="M5 8H11M5 10.5H9" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="card-label">Regulatory Strategy</div>
+      <div class="card-sub">Justifications ICH générées · Paragraphes réglementaires auto</div>
+      <span class="card-badge out1">Output 1</span>
+    </div>
+
+    <div class="card" onclick="show('out_opt')">
+      <div class="card-icon" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2V8L11 11" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="5.5" stroke="#534AB7" stroke-width="1.5"/></svg></div>
+      <div class="card-label">Optimization Engine</div>
+      <div class="card-sub">Plan optimisé · Tableau injections économisées</div>
+      <span class="card-badge out2">Output 2</span>
+    </div>
+
+    <div class="card" onclick="show('out_bench')">
+      <div class="card-icon" style="background:#FAEEDA"><svg viewBox="0 0 16 16" fill="none"><path d="M2 12L5 8L8 10L11 5L14 7" stroke="#854F0B" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="card-label">Benchmarking</div>
+      <div class="card-sub">ADVO vs Standard Biopharm vs Minimum ICH</div>
+      <span class="card-badge out3">Output 3</span>
+    </div>
+
+    <div class="card" onclick="show('out_risk')">
+      <div class="card-icon" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L14 13H2L8 2Z" stroke="#993C1D" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 7V9M8 11V11.5" stroke="#993C1D" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="card-label">Risk Control</div>
+      <div class="card-sub">Alertes structurées · Mesures d'atténuation</div>
+      <span class="card-badge out4">Output 4</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail" id="detail-panel">
+  <div class="detail-head">
+    <div class="detail-head-icon" id="d-icon"></div>
+    <div>
+      <div class="detail-head-label" id="d-title"></div>
+      <div class="detail-head-sub" id="d-sub"></div>
+    </div>
+  </div>
+  <div class="detail-body" id="d-body"></div>
+</div>
+
+</div>
+
+<script>
+const panels = {
+  goal:{icon:"#EEEDFE",iconColor:"#534AB7",title:"Goal — Inputs produit",sub:"Définit le SCP (Score de Complexité Produit)",body:`
+    <div class="rule-card"><div class="rule-title">Forme galénique → SCP</div>
+      <div class="rule-row">Comprimé / gélule — PA unique : SCP = 20</div>
+      <div class="rule-row">Comprimé — formule complexe : SCP = 50</div>
+      <div class="rule-row">Crème / pommade : SCP = 65</div>
+      <div class="rule-row">Suspension : SCP = 75</div>
+      <div class="rule-row">Biologique / protéique : SCP = 95</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Tolérance ATP</div>
+      <div class="rule-row">Variance max acceptable : définit le critère de conformité de chaque output</div>
+      <div class="rule-row">Concentration cible : ancre les calculs de recouvrement et linéarité</div>
+      <div class="highlight-rule">ATP = Analytical Target Profile — fondation réglementaire ICH Q14 §4</div>
+    </div>`},
+
+  history:{icon:"#E1F5EE",iconColor:"#0F6E56",title:"History — Données Q14",sub:"Calcule le SCH (Score de Confiance Historique)",body:`
+    <div class="rule-card"><div class="rule-title">Score Linéarité (poids 40%)</div>
+      <div class="rule-row">R² ≥ 0.9999 sur ≥ 3 campagnes → 100 pts</div>
+      <div class="rule-row">R² ≥ 0.999 sur ≥ 2 campagnes → 75 pts</div>
+      <div class="rule-row">R² ≥ 0.999 sur 1 campagne → 50 pts</div>
+      <div class="rule-row">R² &lt; 0.999 ou aucune donnée → 0 pt</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Score Précision (35%) + SST (25%)</div>
+      <div class="rule-row">%RSD ≤ 0.5% sur ≥ 2 campagnes → 100 pts précision</div>
+      <div class="rule-row">Facteur queue ≤ 1.2, R ≥ 2.0, stable 6 mois → 100 pts SST</div>
+      <div class="highlight-rule">SCH = Lin×0.40 + Précision×0.35 + SST×0.25</div>
+    </div>`},
+
+  risk:{icon:"#FAECE7",iconColor:"#993C1D",title:"Risk — Facteurs de risque",sub:"Calcule le SR (Score de Risque — plus haut = plus risqué)",body:`
+    <div class="rule-card"><div class="rule-title">Score Préparation (35%)</div>
+      <div class="rule-row">Dissolution simple + filtration directe → 10 pts</div>
+      <div class="rule-row">Extraction liquide-liquide ou SPE → 50 pts</div>
+      <div class="rule-row">Digestion enzymatique / hydrolyse acide → 90 pts</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Score Instrument (35%) + Réactifs (30%)</div>
+      <div class="rule-row">HPLC qualifié OQ &lt; 6 mois, colonne neuve → 10 pts</div>
+      <div class="rule-row">OQ 6–12 mois → 40 pts | OQ &gt; 12 mois → 75 pts</div>
+      <div class="rule-row">Tampons standards, réactifs grade HPLC → 10 pts</div>
+      <div class="rule-row">Ion-pair, gradient complexe, instables → 80 pts</div>
+      <div class="highlight-rule">SR = Prép×0.35 + Instr×0.35 + Réac×0.30</div>
+    </div>`},
+
+  sch_detail:{icon:"#E1F5EE",iconColor:"#0F6E56",title:"SCH — Détail du calcul",sub:"Score de Confiance Historique (0–100)",cols:"single",body:`
+    <div class="rule-code">SCH = (Score_Linéarité × 0.40)
+    + (Score_Précision  × 0.35)
+    + (Score_SST        × 0.25)
+
+Cas Biopharm réel (données 2023-2025) :
+  Score_Linéarité = 100  (R²=0.9999, 3 campagnes)
+  Score_Précision = 90   (%RSD &lt; 0.5% sur 2 campagnes)
+  Score_SST       = 85   (pics propres, stable 18 mois)
+
+SCH = 100×0.40 + 90×0.35 + 85×0.25
+SCH = 40 + 31.5 + 21.25 = 92.75 → ÉLEVÉ</div>
+    <div class="highlight-rule">SCH &gt; 75 débloque toutes les réductions sur la linéarité et la précision</div>`},
+
+  sr_detail:{icon:"#FAECE7",iconColor:"#993C1D",title:"SR — Détail du calcul",sub:"Score de Risque (0–100)",cols:"single",body:`
+    <div class="rule-code">SR = (Score_Préparation × 0.35)
+   + (Score_Instrument  × 0.35)
+   + (Score_Réactifs    × 0.30)
+
+Cas Biopharm comprimé 50mg :
+  Score_Préparation = 10  (dissolution simple)
+  Score_Instrument  = 40  (HPLC qualifié, OQ 8 mois)
+  Score_Réactifs    = 20  (ACN/eau, tampon phosphate)
+
+SR = 10×0.35 + 40×0.35 + 20×0.30
+SR = 3.5 + 14 + 6 = 23.5 → FAIBLE</div>
+    <div class="highlight-rule">SR &lt; 40 : la méthode est suffisamment maîtrisée pour réduire le plan</div>`},
+
+  scp_detail:{icon:"#EEEDFE",iconColor:"#534AB7",title:"SCP — Complexité Produit",sub:"Score fixe par forme galénique",cols:"single",body:`
+    <div class="rule-code">SCP lookup table :
+
+  Comprimé / gélule — PA unique           → 20
+  Comprimé — formule complexe              → 50
+  Crème / pommade                          → 65
+  Suspension                               → 75
+  Produit biologique / protéique           → 95
+
+Cas Biopharm :
+  Comprimé 50mg et 500mg  → SCP = 20
+  Gélules 25/50/100mg     → SCP = 20
+  Crème 0.1%              → SCP = 65</div>
+    <div class="highlight-rule">SCP ≤ 30 ET SCH ≥ 75 → exactitude inférée de linéarité (−9 injections)</div>`},
+
+  profile_detail:{icon:"#E1F5EE",iconColor:"#1D9E75",title:"Profil de validation — Règle maîtresse",sub:"Confiance_Nette = SCH − SR×0.5 − SCP×0.3",cols:"single",body:`
+    <div class="rule-code">Confiance_Nette = SCH - (SR × 0.5) - (SCP × 0.3)
+
+Cas Biopharm comprimé 50mg :
+  SCH = 92.75 | SR = 23.5 | SCP = 20
+
+Confiance_Nette = 92.75 - (23.5×0.5) - (20×0.3)
+               = 92.75 - 11.75 - 6
+               = 75.0 → PROFIL ALLÉGÉ ✓
+
+Seuils :
+  ≥ 65 → ALLÉGÉ    (plan réduit justifiable)
+  35–64 → STANDARD+ (optimisations ciblées)
+  &lt; 35 → COMPLET   (plan standard ou renforcé)</div>
+    <div class="highlight-rule">Score 75.0 → plan allégé avec toutes les réductions applicables</div>`},
+
+  rule_lin:{icon:"#E1F5EE",iconColor:"#0F6E56",title:"Règle — Linéarité",sub:"Paramètre ICH Q2(R2) §4.1",body:`
+    <div class="rule-card"><div class="rule-title">Condition allégée</div>
+      <div class="rule-row">SCH ≥ 75 ET SR ≤ 40 → 3 niveaux × 2 réplicats</div>
+      <div class="rule-row">Économie : 9 injections (vs 5×3 standard)</div>
+      <div class="highlight-rule">TOST confirmé (p&lt;0.05, ±2%) → matrice unique : −15 injections</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Condition standard</div>
+      <div class="rule-row">SCH &lt; 75 OU SR &gt; 40 → 5 niveaux × 3 réplicats</div>
+      <div class="rule-row">Deux matrices testées (PA pur + placebo chargé)</div>
+      <div class="rule-row">Référence : ICH Q14 §5.1 enhanced approach</div>
+    </div>`},
+
+  rule_prec:{icon:"#E1F5EE",iconColor:"#0F6E56",title:"Règle — Précision",sub:"Répétabilité + Précision Intermédiaire ICH Q2(R2) §4.2",body:`
+    <div class="rule-card"><div class="rule-title">Répétabilité</div>
+      <div class="rule-row">SCH ≥ 75 + Instr ≤ 40 → 6 injections à 100%</div>
+      <div class="rule-row">Standard : 9 injections (3 niveaux × 3)</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Précision intermédiaire</div>
+      <div class="rule-row">Allégé : 2 jours × 2 analystes × 3 injections = 12</div>
+      <div class="rule-row">Standard : 3 jours × 3 analystes × 3 = 27</div>
+      <div class="rule-row">Si Instr &gt; 60 → 3 jours malgré SCH élevé</div>
+      <div class="highlight-rule">Économie totale précision : ~12 injections</div>
+    </div>`},
+
+  rule_acc:{icon:"#E1F5EE",iconColor:"#0F6E56",title:"Règle — Exactitude",sub:"Recouvrement ICH Q2(R2) §4.3",body:`
+    <div class="rule-card"><div class="rule-title">Inférence depuis linéarité</div>
+      <div class="rule-row">SI SCP ≤ 30 ET SCH ≥ 75</div>
+      <div class="rule-row">→ Exactitude démontrée par corrélation avec linéarité</div>
+      <div class="rule-row">→ 0 injection dédiée supplémentaire</div>
+      <div class="highlight-rule">ICH Q2(R2) §3.3 : acceptable si linéarité prouvée sur même plage</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Plan spike recovery (SCP &gt; 50)</div>
+      <div class="rule-row">3 niveaux (80%, 100%, 120%) × 3 réplicats</div>
+      <div class="rule-row">Critère : 98–102% selon ATP définie</div>
+    </div>`},
+
+  rule_rob:{icon:"#EEEDFE",iconColor:"#534AB7",title:"Règle — Robustesse / MODR",sub:"ICH Q14 §5.4 — Method Lifecycle",body:`
+    <div class="rule-card"><div class="rule-title">Plackett-Burman 8 (SR ≤ 40)</div>
+      <div class="rule-row">4 facteurs : pH ±0.1, %B ±2%, débit ±0.1 mL/min, T° ±5°C</div>
+      <div class="rule-row">8 expériences → dérive MODR statistiquement justifié</div>
+    </div>
+    <div class="rule-card"><div class="rule-title">Plackett-Burman 12 (SR &gt; 60)</div>
+      <div class="rule-row">7 facteurs : +sonication, stabilité 4h vs 24h, fournisseur réactif</div>
+      <div class="rule-row">12 expériences → MODR élargi + alertes Risk Control</div>
+      <div class="highlight-rule">Le MODR généré alimente directement l'Output 1 (justification ICH Q14 §5.4)</div>
+    </div>`},
+
+  out_reg:{icon:"#E1F5EE",iconColor:"#0F6E56",title:"Output 1 — Regulatory Strategy",sub:"Paragraphes ICH auto-générés",cols:"single",body:`
+    <div class="rule-code">Exemple de texte généré pour la linéarité :
+
+"Linearity: A 3-level, 2-replicate design is proposed
+based on historical R² = 0.9999 across 3 campaigns
+(2023–2025), consistent with ICH Q14 §5.1 enhanced
+approach. Equivalence of pure API and placebo-loaded
+calibration curves was confirmed by TOST (p=0.023,
+equivalence margin ±2%), eliminating the need for
+duplicate matrix testing."
+
+→ Référence : ICH Q14 §5.1 / ICH Q2(R2) §4.1</div>
+    <div class="highlight-rule">Chaque paramètre génère son paragraphe réglementaire + la référence ICH exacte</div>`},
+
+  out_opt:{icon:"#EEEDFE",iconColor:"#534AB7",title:"Output 2 — Optimization Engine",sub:"Plan optimisé avec économies chiffrées",cols:"single",body:`
+    <div class="rule-code">Tableau comparatif généré :
+
+Paramètre          Niv.  Rep.  Inj.  Éco.
+─────────────────────────────────────────
+Linéarité           3     2     6   −24 inj
+Répétabilité        1     6     6    −3 inj
+Précision inter.    —    12    12   −15 inj
+Exactitude          inférée de linéarité −9 inj
+Robustesse (DoE)    8 exp.      8    −4 inj
+─────────────────────────────────────────
+TOTAL                          32   −55 inj (-63%)
+
+Temps économisé : ~3.5 jours-analystes
+Coût évité estimé : ~4 200 € (à €/h défini)</div>`},
+
+  out_bench:{icon:"#FAEEDA",iconColor:"#854F0B",title:"Output 3 — Benchmarking",sub:"ADVO vs Standard Biopharm vs Minimum ICH",cols:"single",body:`
+    <div class="rule-code">Comparaison 3 axes :
+
+                    Biopharm    ADVO      Min. ICH
+                    Standard   Optimisé  Théorique
+──────────────────────────────────────────────────
+Injections totales    87         32         28
+Jours-analystes      6.5        2.8        2.5
+Coût estimé (k€)     8.7        3.4        3.0
+Conformité ICH       100%       100%       100%
+Justification Q14     ✗          ✓          —
+
+Gain ADVO vs Standard : −63% injections, −57% coût
+Position ADVO vs Minimum ICH : +14% injections
+avec justification réglementaire complète</div>
+    <div class="highlight-rule">ADVO n'est pas au minimum — il est au minimum justifiable et défendable</div>`},
+
+  out_risk:{icon:"#FAECE7",iconColor:"#993C1D",title:"Output 4 — Risk Control",sub:"Alertes structurées par réduction proposée",cols:"single",body:`
+    <div class="rule-code">[ALERT — NIVEAU MODÉRÉ]
+Réduction    : Linéarité 3 points au lieu de 5
+Vulnérabilité: Non-linéarité potentielle hors 80–120%
+Déclencheur  : Changement de fournisseur excipient
+Atténuation  : Conserver données 50% et 150% comme
+               référence documentaire (ICH Q14 §6)
+Critère de
+re-validation: %RSD inter-campagne > 1.5%
+
+[ALERT — NIVEAU FAIBLE]
+Réduction    : Exactitude inférée de linéarité
+Vulnérabilité: Biais systématique non détecté si
+               matrice interfère à un seul niveau
+Atténuation  : Monitorer recouvrement SST à 100%
+               à chaque série analytique</div>`}
+};
+
+function show(key){
+  const p=panels[key];
+  if(!p)return;
+  const panel=document.getElementById('detail-panel');
+  const icon=document.getElementById('d-icon');
+  icon.style.background=p.icon;
+  icon.innerHTML=`<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="${p.iconColor}" stroke-width="1.5"/></svg>`;
+  document.getElementById('d-title').textContent=p.title;
+  document.getElementById('d-sub').textContent=p.sub;
+  const body=document.getElementById('d-body');
+  body.innerHTML=p.body||'';
+  body.className='detail-body'+(p.cols==='single'?' single':'');
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+</script>

@@ -1,0 +1,33 @@
+,Cacul de l'Exactitude,,,,,,,,,,
+,Produit,comprimé à 50mg,,,,,,,,,
+,Methode,Dosage,,,,,,,,,
+,Analyste,GHAA,,,,,,,,,
+,Date d'analyse,26/05/2025,,,,,,,,,
+,Concentration STD (mg/ml),,,,,Concentration P chargé (mg/ml),,,,,
+,,,,,,,,,,,
+,Numero de lot du WS,04020522,,,,Numero de lot de la matiere,04020522,,,,
+,Pe STD,50.27,dans une fiole de,50,,Pureté de la matiere premiere (%),100,,,,
+,Pureté STD (%),100,,,,Volume de fiole,50,,,,
+,Facteur de dilution supplémentaire,0.02,,,,Facteur de dilution supplémentaire,0.02,,,,
+,"Concetration STD (mg/ml)
+(tenir compte de la pureté du WS)",0.0201,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,"Pe placebo chargé
+(mg)",Signal Standard,"Signal
+Placebo
+chargé","Concentration
+calculée (mg/ml)","Concentration
+introduite
+(mg/ml)","Facteur de
+recouvrement
+(%)",Yi,Y',SI,RSD
+,Placebo chargé 1 à 70%,35.89,1515029,1083754,0.014,0.014,100.2,99.9,100.3,0.7,0.7
+,Placebo chargé 2 à 70%,35.54,1515029,1069242,0.014,0.014,99.8,,,,
+,Placebo chargé 3 à 70%,35.44,1515029,1064769,0.014,0.014,99.7,,,,
+,Placebo chargé 1 à 100%,50.14,1515029,1505792,0.02,0.02,99.6,100.5,,,
+,Placebo chargé 2 à 100%,50.52,1515029,1524935,0.02,0.02,100.2,,,,
+,Placebo chargé 3 à 100%,50.45,1515029,1546199,0.021,0.02,101.7,,,,
+,Placebo chargé 1 à 130%,65.87,1515029,2000311,0.027,0.026,100.8,100.4,,,
+,Placebo chargé 2 à 130%,65.31,1515029,1963054,0.026,0.026,99.7,,,,
+,Placebo chargé 3 à 130%,65.92,1515029,2000828,0.027,0.026,100.7,,,,

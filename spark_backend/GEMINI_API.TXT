@@ -1,0 +1,25 @@
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent" \
+  -H 'Content-Type: application/json' \
+  -H 'X-goog-api-key: AIzaSyDzfcUOrKaq2NhWgxgyHWrtfV3KGYF8jP0' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works in a few words"
+          }
+        ]
+      }
+    ]
+  }'
+
+  API key details
+API Key
+AIzaSyDzfcUOrKaq2NhWgxgyHWrtfV3KGYF8jP0
+Name
+AEC_BIOPHARM_DATA_EXTRACTION
+Project name
+projects/522609615720
+Project number
+522609615720
