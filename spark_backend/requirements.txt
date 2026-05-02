@@ -1,0 +1,20 @@
+fastapi
+uvicorn
+pydantic
+numpy
+scipy
+httpx
+python-multipart
+python-dotenv
+pdfplumber
+python-docx
+pandas
+openpyxl
+tabulate
+instructor
+google-generativeai
+jinja2
+matplotlib
+pdfkit
+docxtpl
+pywin32; platform_system == "Windows"
