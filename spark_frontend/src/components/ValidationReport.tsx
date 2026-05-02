@@ -39,12 +39,18 @@ interface ValidationReportProps {
   data?: any;
 }
 
+type KalmanPoint = {
+  campaign: number;
+  raw: number;
+  filtered: number;
+};
+
 export default function ValidationReport({ data }: ValidationReportProps) {
   const [isExportingPDF, setIsExportingPDF] = useState(false);
   const [isExportingLIMS, setIsExportingLIMS] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
-  const DEMO_KALMAN_DATA = [
+  const DEMO_KALMAN_DATA: KalmanPoint[] = [
     { campaign: 0, raw: 3.2, filtered: 3.2 },
     { campaign: 1, raw: 3.0, filtered: 3.05 },
     { campaign: 2, raw: 3.1, filtered: 3.06 },
@@ -80,10 +86,10 @@ export default function ValidationReport({ data }: ValidationReportProps) {
   
   // Chart mappings with fallback to the live copilot payload when available.
   const sprtDataToRender = data?.sequential?.sprtLogs || DEMO_SPRT_DATA;
-  const KALMAN_DATA = data?.copilot?.kalman?.campaigns || data?.kalman?.campaigns || [];
-  const kalmanDataToRender = data?.kalman || DEMO_KALMAN_DATA;
-  const kalmanChartData = Array.isArray(kalmanDataToRender)
-    ? kalmanDataToRender
+  const KALMAN_DATA = (data?.copilot?.kalman?.campaigns || data?.kalman?.campaigns || []) as KalmanPoint[];
+  const kalmanDataToRender = (data?.kalman || DEMO_KALMAN_DATA) as KalmanPoint[] | unknown;
+  const kalmanChartData: KalmanPoint[] = Array.isArray(kalmanDataToRender)
+    ? (kalmanDataToRender as KalmanPoint[])
     : KALMAN_DATA.length > 0
       ? KALMAN_DATA
       : DEMO_KALMAN_DATA;
